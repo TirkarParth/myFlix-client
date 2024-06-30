@@ -1,99 +1,107 @@
 import React, { useState, useEffect } from 'react';
-import { MovieCard } from "../movie-card/movie-card";
-import { MovieView } from "../movie-view/movie-view";
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
+import { MovieCard } from '../movie-card/movie-card';
+import { MovieView } from '../movie-view/movie-view';
+import { LoginView } from '../login-view/login-view';
+import { SignupView } from '../signup-view/signup-view';
 import './main-view.scss';
 
 export const MainView = () => {
+    const storedUser = JSON.parse(localStorage.getItem('user'));
+    const storedToken = localStorage.getItem('token');
+    const [user, setUser] = useState(storedUser ? storedUser : null);
+    const [token, setToken] = useState(storedToken ? storedToken : null);
     const [movies, setMovies] = useState([]);
-    /**
-        {
-            id: 1,
-            title: "The Dark Knight",
-            image: "https://upload.wikimedia.org/wikipedia/commons/b/b0/The_Dark_Knight_Batman.jpg",
-            director: "Christopher Nolan",
-            description: "A gritty and grounded superhero movie.",
-            genre: "Action"
-        },
-        {
-            id: 2,
-            title: "Rush Hour",
-            image: "https://m.media-amazon.com/images/I/61kGlPSpkKL._AC_UF894,1000_QL80_.jpg",
-            director: "Brett Ratner",
-            description: "A tale of a powerful mafia family.",
-            genre: "Action Comedy"
-        },
-        {
-            id: 3,
-            title: "Inception",
-            image: "https://m.media-amazon.com/images/I/912AErFSBHL._AC_UF894,1000_QL80_.jpg",
-            director: "Christopher Nolan",
-            description: "A mind-bending journey through dreams.",
-            genre: "Sci-Fi"
-        },
-        {
-            id: 4,
-            title: "Spirited Away",
-            image: "https://m.media-amazon.com/images/I/710ievVCTTL._AC_UF894,1000_QL80_.jpg",
-            director: "Hayao Miyazaki",
-            description: "A series of interconnected crime stories.",
-            genre: "Drama"
-        }
-    ]);
-    */
-
     const [selectedMovie, setSelectedMovie] = useState(null);
-
+    const [error, setError] = useState('');
+  
     useEffect(() => {
-        fetch("https://moviesdb-6abb3284c2fb.herokuapp.com/movies")
-            .then((response) => response.json())
-            .then((movies) => {
-                const moviesApi = movies.map((movie) => ({
-                    id: movie._id,
-                    title: movie.title,
-                    description: movie.description,
-                    imagePath: movie.imagePath[0],
-                    genre: movie.genre.name,
-                    director: movie.director.name,
-                }));
-                setMovies(moviesApi);
-            });
-    }, []);
-
-    if (selectedMovie) {
-        const similarMovies = movies.filter(
-            (movie) => movie.genre === selectedMovie.genre && movie.id !== selectedMovie.id
-        );
-
-        return (
-            <div>
-                <MovieView movie={selectedMovie} onBackClick={() => setSelectedMovie(null)} />
-                <hr />
-                <h2>Similar Movies</h2>
-                <div className="similar-movies">
-                    {similarMovies.map((movie) => (
-                        <div key={movie.id} className="similar-movie-card" onClick={() => setSelectedMovie(movie)}>
-                            {movie.title}
-                        </div>
-                    ))}
-                </div>
-            </div>
-        );
-    }
-
-    if (movies.length === 0) {
-        return <div>The list is empty!</div>;
-    }
-
+      if (token) {
+        fetchMovies();
+      }
+    }, [token]);
+  
+    const fetchMovies = () => {
+      fetch('https://radiant-lake-01596-6878ff7c62df.herokuapp.com/movies', {  //YOUR_MOVIES_ENDPOINT
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Failed to fetch movies');
+        }
+        return response.json();
+      })
+      .then(data => {
+        setMovies(data);
+        setError('');
+      })
+      .catch(error => {
+        console.error('Fetch movies error:', error);
+        setError('Failed to fetch movies. Please try again.');
+      });
+    };
+  
+    const handleLogout = () => {
+      setUser(null);
+      setToken(null);
+      localStorage.clear();
+    };
+  
+    const fetchMovieDetails = (movieId) => {
+      fetch(`https://radiant-lake-01596-6878ff7c62df.herokuapp.com/movies/${movieId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Failed to fetch movie details');
+        }
+        return response.json();
+      })
+      .then(data => {
+        setSelectedMovie(data);
+        setError('');
+      })
+      .catch(error => {
+        console.error('Fetch movie details error:', error);
+        setError('Failed to fetch movie details. Please try again.');
+      });
+    };
+  
     return (
-        <div className="main-view">
-            <h1>Movie List</h1>
-            <div className="movie-list">
-                {movies.map((movie) => (
-                    <div key={movie.id} className="movie-card" onClick={() => setSelectedMovie(movie)}>
-                        {movie.title}
-                    </div>
-                ))}
-            </div>
-        </div>
+      <div className="main-view">
+        {!user ? (
+          <>
+            <LoginView onLoggedIn={(user, token) => { setUser(user); setToken(token); }} />
+            <SignupView />
+          </>
+        ) : (
+          <>
+            <header>
+              <h1>Welcome, {user.Username}!</h1>
+              <button onClick={handleLogout}>Logout</button>
+            </header>
+            <section className="movies-section">
+              <h2>Movie List</h2>
+              {error && <div className="error">{error}</div>}
+              <div className="movie-list">
+                {movies.length === 0 ? (
+                  <div>The movie list is empty!</div>
+                ) : (
+                  movies.map(movie => (
+                    <MovieCard key={movie._id} movie={movie} onMovieClick={() => fetchMovieDetails(movie._id)} />
+                  ))
+                )}
+              </div>
+            </section>
+            {selectedMovie && (
+              <MovieView movie={selectedMovie} />
+            )}
+          </>
+        )}
+      </div>
     );
-};
+  };
