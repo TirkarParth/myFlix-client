@@ -1,0 +1,73 @@
+// main-view.scss
+.main-view {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.movie-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    overflow-y: auto;
+    width: 100%;
+    max-width: 400px; // Limit the width of the list
+    height: 80vh; // Limit the height of the list container
+}
+
+.movie-card {
+    padding: 15px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s;
+    width: 100%; // Ensure full width within the list
+    text-align: center;
+    font-size: 1.2em; // Increase font size for better visibility
+}
+
+.movie-card:hover {
+    transform: scale(1.05);
+    background-color: #d3d3d3;
+}
+
+h1 {
+    margin-bottom: 20px;
+    font-size: 2em;
+    text-align: center;
+}
+
+h2 {
+    margin-top: 20px;
+    text-align: center;
+}
+
+// New styles for similar movies
+.similar-movies {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+    overflow-x: auto;
+    width: 100%;
+}
+
+.similar-movie-card {
+    padding: 10px;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s;
+    min-width: 150px; // Minimum width for each movie card
+    text-align: center;
+    font-size: 1em;
+}
+
+.similar-movie-card:hover {
+    transform: scale(1.05);
+    background-color: #c0c0c0;
+}
