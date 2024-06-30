@@ -1,9 +1,11 @@
-import { useState } from "react";
+import React, { useState, useEffect } from 'react';
 import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
+import './main-view.scss';
 
 export const MainView = () => {
-    const [movies, setMovies] = useState([
+    const [movies, setMovies] = useState([]);
+    /**
         {
             id: 1,
             title: "The Dark Knight",
@@ -37,12 +39,44 @@ export const MainView = () => {
             genre: "Drama"
         }
     ]);
+    */
 
     const [selectedMovie, setSelectedMovie] = useState(null);
 
+    useEffect(() => {
+        fetch("https://moviesdb-6abb3284c2fb.herokuapp.com/movies")
+            .then((response) => response.json())
+            .then((movies) => {
+                const moviesApi = movies.map((movie) => ({
+                    id: movie._id,
+                    title: movie.title,
+                    description: movie.description,
+                    imagePath: movie.imagePath[0],
+                    genre: movie.genre.name,
+                    director: movie.director.name,
+                }));
+                setMovies(moviesApi);
+            });
+    }, []);
+
     if (selectedMovie) {
+        const similarMovies = movies.filter(
+            (movie) => movie.genre === selectedMovie.genre && movie.id !== selectedMovie.id
+        );
+
         return (
-            <MovieView movie={selectedMovie} onBackClick={() => setSelectedMovie(null)} />
+            <div>
+                <MovieView movie={selectedMovie} onBackClick={() => setSelectedMovie(null)} />
+                <hr />
+                <h2>Similar Movies</h2>
+                <div className="similar-movies">
+                    {similarMovies.map((movie) => (
+                        <div key={movie.id} className="similar-movie-card" onClick={() => setSelectedMovie(movie)}>
+                            {movie.title}
+                        </div>
+                    ))}
+                </div>
+            </div>
         );
     }
 
@@ -51,16 +85,15 @@ export const MainView = () => {
     }
 
     return (
-        <div>
-            {movies.map((movie) => (
-                <MovieCard
-                    key={movie.id}
-                    movie={movie}
-                    onMovieClick={(newSelectedMovie) => {
-                        setSelectedMovie(newSelectedMovie);
-                    }}
-                />
-            ))}
+        <div className="main-view">
+            <h1>Movie List</h1>
+            <div className="movie-list">
+                {movies.map((movie) => (
+                    <div key={movie.id} className="movie-card" onClick={() => setSelectedMovie(movie)}>
+                        {movie.title}
+                    </div>
+                ))}
+            </div>
         </div>
     );
 };

@@ -1,3 +1,4 @@
+import React from 'react';
 import { createRoot } from 'react-dom/client';
 
 // Below line with import MainView function from the path /components/main-view/main-view , the file extension jsx for main-view.jsx doesn't not need to be added for jsx code.
