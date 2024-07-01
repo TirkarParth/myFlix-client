@@ -1,37 +1,33 @@
-import React from "react";
-import "./movie-view.scss";  // Add CSS file for styling
-import PropTypes from 'prop-types';
+import React from 'react';
+import { Row, Col, Button, Card, Container } from 'react-bootstrap'; // Import Bootstrap components
 
 export const MovieView = ({ movie, onBackClick }) => {
     return (
-        <div className="movie-view">
-            <div className="movie-title">
-                <h2>{movie.title}</h2>
-            </div>
-            <div className="movie-description">
-                <p>{movie.description}</p>
-            </div>
-            <div className="movie-director">
-                <p>Director: {movie.director}</p>
-            </div>
-            <div className="movie-genre">
-                <p>Genre: {movie.genre}</p>
-            </div>
-            <div className="movie-image">
-                <img src={movie.imagePath} alt={movie.title} />
-            </div>
-            <button onClick={onBackClick}>Back</button>
-        </div>
+        <Container className="movie-view">
+            <Row className="justify-content-md-center">
+                <Col md={8}>
+                    <Card className="mb-3">
+                        <Card.Body>
+                            <Card.Title className="movie-title">
+                                <h2>{movie.title}</h2>
+                            </Card.Title>
+                            <Card.Text className="movie-description">
+                                {movie.description}
+                            </Card.Text>
+                            <Card.Text className="movie-director">
+                                <strong>Director:</strong> {movie.director}
+                            </Card.Text>
+                            <Card.Text className="movie-genre">
+                                <strong>Genre:</strong> {movie.genre}
+                            </Card.Text>
+                            <div className="movie-image">
+                                <img src={movie.imagePath} alt={movie.title} className="img-fluid" />
+                            </div>
+                            <Button variant="primary" onClick={onBackClick} className="mt-3">Back</Button>
+                        </Card.Body>
+                    </Card>
+                </Col>
+            </Row>
+        </Container>
     );
-};
-
-MovieView.propTypes = {
-    movie: PropTypes.shape({
-        title: PropTypes.string.isRequired,
-        description: PropTypes.string.isRequired,
-        director: PropTypes.string.isRequired,
-        genre: PropTypes.string.isRequired,
-        imagePath: PropTypes.string.isRequired
-    }).isRequired,
-    onBackClick: PropTypes.func.isRequired
 };
