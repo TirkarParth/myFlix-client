@@ -48,39 +48,39 @@ The project structure is as follows:
 mymovieflix/
 │
 ├── src/
-│   ├── components/
-│   │   ├── main-view/
-│   │   │   ├── main-view.jsx
-│   │   │   └── main-view.scss
-│   │   ├── login-view/
-│   │   │   ├── login-view.jsx
-│   │   │   └── login-view.scss
-│   │   ├── signup-view/
-│   │   │   ├── signup-view.jsx
-│   │   │   └── signup-view.scss
-│   │   ├── profile-view/
-│   │   │   ├── profile-view.jsx
-│   │   │   └── profile-view.scss
-│   │   ├── navigation-bar/
-│   │   │   ├── navigation-bar.jsx
-│   │   │   └── navigation-bar.scss
-│   │   ├── user-info/
-│   │   │   ├── user-info.jsx
-│   │   │   └── user-info.scss
-│   │   ├── user-update/
-│   │   │   ├── user-update.jsx
-│   │   │   └── user-update.scss
-│   │   ├── user-deregister/
-│   │   │   ├── user-deregister.jsx
-│   │   │   └── user-deregister.scss
-│   │   ├── favorite-movie/
-│   │   │   ├── favorite-movie.jsx
-│   │   │   └── favorite-movie.scss
-│   │   └── movie-card/
-│   │       ├── movie-card.jsx
-│   │       └── movie-card.scss
-│   ├── index.jsx
-│   └── index.scss
+│ ├── components/
+│ │ ├── main-view/
+│ │ │ ├── main-view.jsx
+│ │ │ └── main-view.scss
+│ │ ├── login-view/
+│ │ │ ├── login-view.jsx
+│ │ │ └── login-view.scss
+│ │ ├── signup-view/
+│ │ │ ├── signup-view.jsx
+│ │ │ └── signup-view.scss
+│ │ ├── profile-view/
+│ │ │ ├── profile-view.jsx
+│ │ │ └── profile-view.scss
+│ │ ├── navigation-bar/
+│ │ │ ├── navigation-bar.jsx
+│ │ │ └── navigation-bar.scss
+│ │ ├── user-info/
+│ │ │ ├── user-info.jsx
+│ │ │ └── user-info.scss
+│ │ ├── user-update/
+│ │ │ ├── user-update.jsx
+│ │ │ └── user-update.scss
+│ │ ├── user-deregister/
+│ │ │ ├── user-deregister.jsx
+│ │ │ └── user-deregister.scss
+│ │ ├── favorite-movie/
+│ │ │ ├── favorite-movie.jsx
+│ │ │ └── favorite-movie.scss
+│ │ └── movie-card/
+│ │ ├── movie-card.jsx
+│ │ └── movie-card.scss
+│ ├── index.jsx
+│ └── index.scss
 │
 ├── .gitignore
 ├── package.json
