@@ -27,19 +27,20 @@ The application interacts with a backend server for user and movie data. Below a
 Follow these steps to set up and run the MyMovieFlix app on your local machine:
 
 1. **Clone the repository:**
+   git clone https://github.com/TirkarParth/myFlix-client
    ```sh
-   git clone https://github.com/yourusername/mymovieflix.git
-   cd mymovieflix
+   cd myFlix-client
 
-2. **Install the dependencies:**
+3. **Install the dependencies:**
    Make sure you have Node.js and npm installed on your machine. Then, run: 
    ```sh
    npm install
 
-3. **Run the development server:**
+4. **Run the development server:**
+   The app should now be running on http://localhost:1234.
    ```sh
    npm start
-   The app should now be running on http://localhost:1234.
+   
 
 ## Project Structure
 
