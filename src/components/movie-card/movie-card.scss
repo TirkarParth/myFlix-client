@@ -1,0 +1,41 @@
+.movie-card {
+  position: relative;
+  transition: transform 0.3s ease;
+}
+
+.movie-card:hover {
+  transform: scale(1.05);
+}
+
+.image-container {
+  position: relative;
+}
+
+.movie-card-image {
+  width: 100%;
+  height: auto;
+}
+
+.description-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.movie-card:hover .description-overlay {
+  opacity: 1;
+}
+
+.description-text {
+  padding: 10px;
+  text-align: center;
+}
