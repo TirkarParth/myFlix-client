@@ -1,90 +1,51 @@
-.movie-view {
-  .card {
-    margin-bottom: 20px;
-  }
-
-  h3 {
-    margin-top: 30px;
-  }
-}
-
-.movie-view {
-  .movie-title {
-    h2 {
-      margin-bottom: 20px;
-    }
-  }
-
-  .movie-description {
-    margin-bottom: 20px;
-  }
-
-  .movie-director,
-  .movie-genre {
-    margin-bottom: 10px;
-  }
-
-  .movie-image {
-    margin-bottom: 20px;
-
-    img {
-      max-width: 100%;
-      height: auto;
-    }
-  }
-}
-
-
-.movies-section {
-  .movie-list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-
-    .card {
-      margin: 10px;
-      cursor: pointer;
-      transition: transform 0.2s;
-
-      &:hover {
-        transform: scale(1.05);
-      }
-    }
-  }
-}
-
-.error {
-  color: red;
-  margin-bottom: 20px;
-}
-
-header {
+.movie-card-container {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-
-  h1 {
-    margin: 0;
-  }
-
-  button {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-
-    &:hover {
-      background-color: #0056b3;
-    }
-  }
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 20px;
 }
 
-.movies-section {
-  margin-top: 20px;
+.movie-card-col {
+  margin: 15px 10px;
+}
 
-  h2 {
-    margin-bottom: 20px;
-  }
+.movieView {
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.movie-card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.movie-card:hover {
+  transform: scale(1.02);
+  transition: transform 0.3s ease;
+}
+
+.movie-card-image {
+  border-bottom: 1px solid #ddd;
+}
+
+.movieTitle {
+  font-weight: bold;
+}
+
+.movieGenre {
+  color: #888;
+}
+
+.description-box {
+  background-color: rgba(0, 0, 0, 0.75);
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
 }

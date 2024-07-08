@@ -1,82 +1,82 @@
-import React, { useState } from 'react';
-// import './login-view.scss'; // Import your SCSS styles here
-import { Form, Button, Container, Row, Col } from 'react-bootstrap';
+import React from "react";
+import {useState, useEffect} from "react";
+import { FormGroup } from "react-bootstrap";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import "./login-view.scss";
 
 export const LoginView = ({ onLoggedIn }) => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+    useEffect(() => {
+        setUsername("");
+        setPassword("");
+    },[]);
 
-    // Basic validation
-    if (!username || !password) {
-      setError('Please enter username and password');
-      return;
-    }
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        console.log(username);
+        console.log(password);
+        const data =  { 
+            Username: username,
+            Password: password
+        };
 
-    const data = {
-      Username: username,
-      Password: password
-    };
-
-    // Replace 'LOGIN_URL' with your actual login endpoint
-    fetch('https://radiant-lake-01596-6878ff7c62df.herokuapp.com/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
+    fetch("https://radiant-lake-01596-6878ff7c62df.herokuapp.com/login?Username="+username+"&Password="+password, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
     })
-    .then(response => response.json())
-    .then(data => {
-      if (data && data.token) {
-        localStorage.setItem('user', JSON.stringify(data.user));
-        localStorage.setItem('token', data.token);
-        onLoggedIn(data.user, data.token);
-      } else {
-        setError('Invalid username or password');
-      }
-    })
-    .catch(error => {
-      console.error('Login error:', error);
-      setError('Login failed. Please try again later.');
-    });
-  };
+    .then((response) => response.json())
+    .then((data) => {
+        console.log("Login response: ", data);
+        if(data.user) { 
+            localStorage.setItem("user", JSON.stringify(data.user));
+            localStorage.setItem("token", data.token);
+            onLoggedIn(data.user, data.token);
+        } else {
+            alert("No such user");
+        }
+      })
+     .catch((error) => {
+        console.error("Error occurred during login", error);
+        if (error.response) {
+            console.error("Server responded with.", error.response.data);
+        }
+        alert("Something went wrong");
+     });        
+   };
+   
+ return (
+    <Form onSubmit={handleSubmit} className= "userLogin"> 
+       <Form.Group controlId = "formUsername" className= "inputGroup">
+        <div>
+            <h1 className="userLogin" >User Login</h1>
+        </div>
+        <Form.Label>Username:</Form.Label>
+        <Form.Control className = "loginForm"
+            type="text" 
+            value={username}
+            onChange={(e) => setUsername (e.target.value)}
+            required
+            autoComplete="off"
+             />
+        </Form.Group>
 
-  return (
-    <Container>
-      <Row className="justify-content-md-center">
-        <Col md={8}>
-          <h1>Login</h1>
-          <Form onSubmit={handleSubmit}>
-            <Form.Group controlId="formUsername">
-              <Form.Label>Username</Form.Label>
-              <Form.Control
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                required
-                placeholder="Enter your username"
-              />
-            </Form.Group>
-            <Form.Group controlId="formPassword">
-              <Form.Label>Password</Form.Label>
-              <Form.Control
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                placeholder="Enter your password"
-              />
-            </Form.Group>
-            <Button variant="primary" type="submit">
-              Login
-            </Button>
-          </Form>
-        </Col>
-      </Row>
-    </Container>
-  );
+       <Form.Group controlId = "formPassword" className="inputGroup">
+        <Form.Label>Password:</Form.Label>
+        <Form.Control className = "loginForm"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword (e.target.value)}
+            required 
+            autoComplete="off"
+            />
+        </Form.Group>
+        <Button variant= "primary" type="Submit" className="loginButton">Submit</Button>
+    </Form>
+ );
 };
