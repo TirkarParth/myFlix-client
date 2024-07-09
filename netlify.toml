@@ -4,5 +4,5 @@
   status = 200
 
 [build]
-    command = "npx parcel build public/index.html"
+    command = "npx parcel build src/index.html"
     publish = "dist"
