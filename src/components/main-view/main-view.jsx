@@ -19,7 +19,7 @@ export const MainView = () => {
   const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
   const handleToggleFavorite = (movieId, isFavorite) => {
-    console.log(`Toggle favorite for movie with ID ${movieId} (${isFavorite ? 'Add to favorites' : 'Remove from favorites'})`);
+    setUser({ ...user, FavoriteMovies: [...user.FavoriteMovies, movieId]})
   };
 
   useEffect(() => {
@@ -124,7 +124,7 @@ export const MainView = () => {
             }
           />
           {user && (
-            <Route path="/profile" element={<ProfileView user={user} />} />
+            <Route path="/profile" element={<ProfileView user={user} movies={movies} />} />
           )}
         </Routes>
       </Row>

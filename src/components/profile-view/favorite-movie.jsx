@@ -8,7 +8,7 @@ export const FavoriteMovies = ({ movies, user, onToggleFavorite }) => {
   }
 
   const favoriteMovies = movies.filter((movie) =>
-    user.FavoriteMovies.includes(movie._id)
+    user.FavoriteMovies.includes(movie.id)
   );
 
   return (
