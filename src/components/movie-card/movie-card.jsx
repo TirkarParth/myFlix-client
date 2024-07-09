@@ -4,13 +4,16 @@ import { Link } from "react-router-dom";
 import { Button, Card } from "react-bootstrap";
 import "./movie-card.scss";
 
-export const MovieCard = ({ movie, onToggleFavorite }) => {
+export const MovieCard = ({ movie, onAddFavorite, onRemoveFavorite }) => {
+  console.log(movie);
   const [isHovered, setIsHovered] = useState(false);
-  const [isFavorite, setIsFavorite] = useState(false);
 
   const handleToggleFavorite = () => {
-    setIsFavorite(!isFavorite);
-    onToggleFavorite(movie.id, !isFavorite);
+    if(movie?.isFavorite) {
+      onRemoveFavorite(movie.id);
+    } else {
+      onAddFavorite(movie.id);
+    }
   };
 
   return (
@@ -39,7 +42,7 @@ export const MovieCard = ({ movie, onToggleFavorite }) => {
         <Card.Title className="movieTitle">{movie.title}</Card.Title>
         <Card.Text className="movieGenre">{movie.genre.name}</Card.Text>
         <Button variant="primary" onClick={handleToggleFavorite}>
-          {isFavorite ? "Remove from Favorites" : "Add to Favorites"}
+          {movie?.isFavorite ? "Remove from Favorites" : "Add to Favorites"}
         </Button>
       </Card.Body>
     </Card>

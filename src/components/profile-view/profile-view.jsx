@@ -7,7 +7,7 @@ import { FavoriteMovies } from "./favorite-movie";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./profile-view.scss";
 
-export const ProfileView = ({ movies, user }) => {
+export const ProfileView = ({ movies, user, onRemoveFavorite }) => {
   const [currentUser, setCurrentUser] = useState(user);
 
   useEffect(() => {
@@ -71,6 +71,7 @@ export const ProfileView = ({ movies, user }) => {
           movies={movies}
           user={currentUser}
           onToggleFavorite={handleToggleFavorite}
+          onRemoveFavorite={onRemoveFavorite}
         />
       </div>
     </div>

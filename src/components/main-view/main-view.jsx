@@ -18,9 +18,17 @@ export const MainView = () => {
   const [token, setToken] = useState(storedToken ? storedToken : null);
   const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
-  const handleToggleFavorite = (movieId, isFavorite) => {
+
+  const onAddFavorite = (movieId, isFavorite) => {
     setUser({ ...user, FavoriteMovies: [...user.FavoriteMovies, movieId]})
   };
+
+  const onRemoveFavorite = (movieId) => {
+    setUser({
+      ...user,
+      FavoriteMovies: user.FavoriteMovies.filter((movie) => movie !== movieId),
+    });
+  }
 
   useEffect(() => {
     if (!token) return;
@@ -44,6 +52,13 @@ export const MainView = () => {
         setMovies(movieFromApi);
       });
   }, [token]);
+
+  const updatedMovies = movies.map((movie) => {
+    if (user.FavoriteMovies.includes(movie.id)) {
+      return { ...movie, isFavorite: true };
+    }
+    return movie;
+  });
 
   return (
     <BrowserRouter>
@@ -113,9 +128,9 @@ export const MainView = () => {
                   <Col>The List is Empty!</Col>
                 ) : (
                   <>
-                    {movies.map((movie) => (
+                    {updatedMovies.map((movie) => (
                       <Col md={3} sm={6} xs={12} className="movie-card-col" key={movie.id}>
-                        <MovieCard movie={movie} onToggleFavorite={handleToggleFavorite} />
+                        <MovieCard movie={movie} onAddFavorite={onAddFavorite} onRemoveFavorite={onRemoveFavorite} />
                       </Col>
                     ))}
                   </>
@@ -124,7 +139,7 @@ export const MainView = () => {
             }
           />
           {user && (
-            <Route path="/profile" element={<ProfileView user={user} movies={movies} />} />
+            <Route path="/profile" element={<ProfileView user={user} movies={movies} onRemoveFavorite={onRemoveFavorite} />} />
           )}
         </Routes>
       </Row>
