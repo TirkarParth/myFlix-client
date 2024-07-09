@@ -10,6 +10,14 @@ MyMovieFlix is a web application that allows users to browse movies, manage thei
 - Favorite Movies: Add and remove movies from the favorites list.
 - Responsive Design: Works well on various screen sizes.
 
+## Deployment
+
+The MyMovieFlix app is deployed and available at [MyMovieFlix on Netlify](https://ptmovieflix.netlify.app/).
+
+- **Client Side:** The frontend is hosted on Netlify.
+- **Server Side:** The backend server is deployed on Heroku.
+- **Database:** The application uses MongoDB Atlas for storing user and movie data.
+
 ## API Endpoints
 
 The application interacts with a backend server for user and movie data. Below are the main API endpoints used:
